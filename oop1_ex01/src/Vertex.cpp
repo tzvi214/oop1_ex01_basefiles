@@ -7,7 +7,7 @@ bool Vertex::isHigherThan(const Vertex& other) const
 {
     return m_row > other.m_row;
 }
-
+ 
 bool Vertex::isToTheRightOf(const Vertex& other) const
 {
     return m_col > other.m_col;
@@ -27,3 +27,4 @@ std::ostream& operator<<(std::ostream& ostr, const Vertex& v)
 {
     return ostr << "(" << v.m_col << ", " << v.m_row << ")";
 }
+
