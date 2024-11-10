@@ -65,7 +65,7 @@ int main()
         std::cin.ignore(); // ignore the enter
 
 
-         //  auto rectangle = Rectangle(vertices.data());
+           auto rectangle = Rectangle(vertices.data());
            //useShape(rectangle, shapeName);
     }
 #endif // RECTANGLE

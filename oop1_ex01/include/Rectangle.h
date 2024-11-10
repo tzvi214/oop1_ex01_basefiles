@@ -6,6 +6,10 @@ class Rectangle
 {
   public:
 	Rectangle(const Vertex& bottomLeft, const Vertex& topRight);
+	Rectangle(const Vertex vertices[2]);
+	Rectangle(double x, double y, double width, double height);
+	Rectangle(const Vertex& topRight, double width, double height);
+
 	Vertex getBottomLeft()  const;
 	Vertex getTopRight() const;
 	double getWidth() const;
@@ -13,10 +17,9 @@ class Rectangle
 	
 
   private:
-
-	double m_bl_col, m_bl_row; // bottomLeft
-	double m_tr_col, m_tr_row; // topRight
-	double m_width, m_height;
+   Vertex m_bottomLeft;
+   Vertex m_topRight;
+   double m_width, m_height;
 	   
 };
 
