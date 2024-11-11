@@ -7,6 +7,8 @@
 #include "macros.h"
 #include "Vertex.h"
 #include "Board.h"
+using namespace std;
+
 
 #define RECTANGLE           1
 #define TRIANGLE            0
@@ -47,13 +49,25 @@ void printGenericInfo(const Shape& shape, std::string_view shapeName);
 
 int main()
 {
-   /* Vertex one, two;
-    one.m_col = 1, one.m_row = 5;
-    two.m_col =2, two.m_row = 10;*/
+  /*  Vertex bl, tr;
+    bl.m_col = 1, bl.m_row = 1;
+    tr.m_col = 4, tr.m_row = 3;
+   */
    
 #if RECTANGLE
     {
-      //  Rectangle rec_my(one, two);
+     
+        //Rectangle rec_my(1,1,3,2); //bl, tr
+        //Vertex bottomLeft = rec_my.getBottomLeft();
+        //Vertex topRight = rec_my.getTopRight();
+
+        //cout << bottomLeft.m_col << " ," << bottomLeft.m_row << " ,"
+        //    << topRight.m_col << " ," << topRight.m_row << endl;
+
+        //cout << "getWidth is :" << rec_my.getWidth() << endl;
+        //cout << " getHeight is :" << rec_my.getHeight() << endl;
+
+
         static constexpr auto shapeName = std::string_view("rectangle");
 
         const auto vertices = std::array<Vertex, 2>
@@ -65,7 +79,12 @@ int main()
         std::cin.ignore(); // ignore the enter
 
 
+       
+
            auto rectangle = Rectangle(vertices.data());
+
+         
+
            //useShape(rectangle, shapeName);
     }
 #endif // RECTANGLE
