@@ -12,7 +12,7 @@ class Rectangle
 	  Rectangle(double x, double y, double width, double height);
 	  Rectangle(const Vertex& topRight, double width, double height);
 
-	
+	//
 	Rectangle getBoundingRectangle() const;
 	double getPerimeter() const;
 	double getArea()const;
@@ -20,18 +20,17 @@ class Rectangle
 
 
 	bool scale(double factor);
-	void draw(Board& board)const;
-	
+	//
 	Vertex getBottomLeft()  const;
 	Vertex getTopRight() const;
 	double getWidth() const;
 	double getHeight() const;
-	
+	void draw(Board& board)const;
 	
 
   private:
 
-   bool isLegal(const Vertex& bottomLeft, const Vertex& topRight);
+   
    Vertex m_bottomLeft;
    Vertex m_topRight;
    double m_width, m_height;

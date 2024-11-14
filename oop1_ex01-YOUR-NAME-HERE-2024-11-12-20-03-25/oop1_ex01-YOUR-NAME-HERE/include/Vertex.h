@@ -14,8 +14,6 @@ struct Vertex
     bool isHigherThan(const Vertex& other) const;
     bool isToTheRightOf(const Vertex& other) const;
     bool isValid() const;
-    bool isParallelXAxis(const Vertex& other) const;
-    bool isLegalWindo(const Vertex& bottomLeft,const Vertex& topRight)const;
 };
 
 std::istream& operator>>(std::istream& istr, Vertex& v);
