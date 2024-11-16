@@ -32,7 +32,7 @@ std::ostream& operator<<(std::ostream& ostr, const Vertex& v)
 bool Vertex::isParallelXAxis(const Vertex& other) const
 {
     // must be if this function are current.
-    return m_row - other.m_row > 0.1; //  m_row == other.m_row
+    return m_row - other.m_row < 0.1; //  m_row == other.m_row
 }
 
 bool Vertex::isLegalWindo(const Vertex& bottomLeft, const Vertex& topRight) const

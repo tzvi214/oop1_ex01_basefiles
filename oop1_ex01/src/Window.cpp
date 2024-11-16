@@ -44,16 +44,12 @@ Vertex Window::getPoint() const
 Rectangle Window::getBoundingRectangle() const
 {
 	return m_rectangle.getBoundingRectangle();
+	// return m_rectangle;
 }
 
 double Window::getPerimeter() const
 {
- //  Rectangle left_down(m_rectangle.getBottomLeft(), m_point), 
- //  right_down(Vertex( m_point.m_col, m_rectangle.getBottomLeft().m_row), Vertex(m_rectangle.getTopRight().m_col, m_point.m_row)),//(p,bl),(tr,p)
- //  left_up(Vertex(m_rectangle.getBottomLeft().m_col, m_point.m_row), Vertex(m_point.m_col, m_rectangle.getTopRight().m_row)),//(bl,p),(p,tr)
- //  right_up(m_point, m_rectangle.getTopRight());
-
-	//return(left_down.getPerimeter() + right_down.getPerimeter() + left_up.getPerimeter() + right_up.getPerimeter()) ;
+ 
 	return m_rectangle.getPerimeter()*2;
 }
 
@@ -67,6 +63,7 @@ Vertex Window::getCenter() const
 	return m_point;
 }
 
+
 bool Window::scale(double factor)
 {
 	return m_rectangle.scale(2); 
@@ -75,21 +72,16 @@ bool Window::scale(double factor)
 void Window::draw(Board& board) const
 {
 
- Rectangle left_down(m_rectangle.getBottomLeft(), m_point),
- right_down(Vertex(m_point.m_col, m_rectangle.getBottomLeft().m_row), Vertex(m_rectangle.getTopRight().m_col, m_point.m_row)),//(p,bl),(tr,p)
- left_up(Vertex(m_rectangle.getBottomLeft().m_col, m_point.m_row), Vertex(m_point.m_col, m_rectangle.getTopRight().m_row)),//(bl,p),(p,tr)
- right_up(m_point, m_rectangle.getTopRight());
+  Rectangle left_down(m_rectangle.getBottomLeft(), m_point),
+  right_down(Vertex(m_point.m_col, m_rectangle.getBottomLeft().m_row), Vertex(m_rectangle.getTopRight().m_col, m_point.m_row)),//(p,bl),(tr,p)
+  left_up(Vertex(m_rectangle.getBottomLeft().m_col, m_point.m_row), Vertex(m_point.m_col, m_rectangle.getTopRight().m_row)),//(bl,p),(p,tr)
+  right_up(m_point, m_rectangle.getTopRight());
 
- //cout << "\n right_down is:" << right_down.getBottomLeft().m_col << "," << right_down.getBottomLeft().m_row << ";  " <<
-	// right_down.getTopRight().m_col << ", " << right_down.getTopRight().m_row << endl;
 
- //cout << "\n left_up is:" << left_up.getBottomLeft().m_col << "," << left_up.getBottomLeft().m_row << ";  "
-	// << left_up.getTopRight().m_col << ", " << left_up.getTopRight().m_row << endl;
-
- left_down.draw(board);
- right_down.draw(board);
- left_up.draw(board);
- right_up.draw(board);
+  left_down.draw(board);
+  right_down.draw(board);
+  left_up.draw(board);
+  right_up.draw(board);
 
 }
 

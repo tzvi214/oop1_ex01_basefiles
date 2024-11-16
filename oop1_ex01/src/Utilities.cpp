@@ -20,3 +20,10 @@ bool sameRow(const Vertex& v1, const Vertex& v2)
 {
     return std::round(v1.m_row) == std::round(v2.m_row);
 }
+
+
+bool isLegalTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3)
+{
+    return (v1.isValid() && v2.isValid() && v3.isValid() && v2.isParallelXAxis(v1));
+}
+

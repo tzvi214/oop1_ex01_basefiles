@@ -91,6 +91,7 @@ Rectangle Rectangle::getBoundingRectangle() const
 double Rectangle::getPerimeter() const
 {
     return (m_height * 2) + (m_width * 2);
+
 }
 
 double Rectangle::getArea() const

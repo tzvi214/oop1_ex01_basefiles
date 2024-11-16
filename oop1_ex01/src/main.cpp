@@ -2,17 +2,16 @@
 #include <string>
 #include <string_view>
 #include <array>
-#include <format>
+#include <print>
 
 #include "macros.h"
 #include "Vertex.h"
 #include "Board.h"
-using namespace std;
-#define RECTANGLE           0
-#define TRIANGLE            0
-#define ISOSCELES_TRIANGLE  0
-#define WINDOW              1
 
+#define RECTANGLE           0
+#define TRIANGLE            1
+#define ISOSCELES_TRIANGLE  0
+#define WINDOW              0
 
 #if RECTANGLE
 #include "Rectangle.h"
@@ -46,15 +45,8 @@ void draw(const Shape& shape, Board&);
 template <typename Shape>
 void printGenericInfo(const Shape& shape, std::string_view shapeName);
 
-// פונקציית to_string עבור Vertex
-std::string to_string(const Vertex& v) {
-    return "(" + std::to_string(v.m_col) + ", " + std::to_string(v.m_row) + ")";
-}
-
 int main()
 {
-    
-
 #if RECTANGLE
     {
         static constexpr auto shapeName = std::string_view("rectangle");
@@ -62,7 +54,7 @@ int main()
         const auto vertices = std::array<Vertex, 2>
         {
             readVertex("bottom-left", shapeName),
-                readVertex("top-right", shapeName)
+            readVertex("top-right", shapeName)
         };
 
         std::cin.ignore(); // ignore the enter
@@ -71,24 +63,24 @@ int main()
         useShape(rectangle, shapeName);
     }
 #endif // RECTANGLE
-//
-//#if TRIANGLE
-//    {
-//        static constexpr auto shapeName = std::string_view("triangle");
-//
-//        const auto vertices = std::array<Vertex, 3>
-//        {
-//            readVertex("first", shapeName),
-//                readVertex("second", shapeName),
-//                readVertex("third", shapeName)
-//        };
-//
-//        std::cin.ignore(); // ignore the enter
-//
-//        auto triangle = Triangle(vertices.data());
-//        useShape(triangle, shapeName);
-//    }
-//#endif // TRIANGLE
+
+#if TRIANGLE
+    {
+        static constexpr auto shapeName = std::string_view("triangle");
+
+        const auto vertices = std::array<Vertex, 3>
+        {
+            readVertex("first", shapeName),
+            readVertex("second", shapeName),
+            readVertex("third", shapeName)
+        };
+
+        std::cin.ignore(); // ignore the enter
+
+        auto triangle = Triangle(vertices.data());
+        useShape(triangle, shapeName);
+    }
+#endif // TRIANGLE
 
 #if ISOSCELES_TRIANGLE
     {
@@ -97,8 +89,8 @@ int main()
         const auto vertices = std::array<Vertex, 3>
         {
             readVertex("first", shapeName),
-                readVertex("second", shapeName),
-                readVertex("third", shapeName)
+            readVertex("second", shapeName),
+            readVertex("third", shapeName)
         };
 
         std::cin.ignore(); // ignore the enter
@@ -110,13 +102,12 @@ int main()
 
 #if WINDOW
     {
-
         static constexpr auto shapeName = std::string_view("window");
 
         const auto vertices = std::array<Vertex, 2>
         {
             readVertex("bottom-left", shapeName),
-                readVertex("top-right", shapeName)
+            readVertex("top-right", shapeName)
         };
 
         const auto rect = Rectangle(vertices.data());
@@ -134,21 +125,49 @@ void printInfo(const Rectangle& rectangle)
     static constexpr auto shapeName = std::string_view("rectangle");
 
     const auto printVertex = [](const Vertex& v, std::string_view vertexName)
-        {
-            std::cout << "The " << vertexName << " vertex of the " << shapeName << " is: " << to_string(v) << "\n";
-        };
+    {
+        std::println("The {} vertex of the {} is: {}", vertexName, shapeName, v);
+    };
 
     printVertex(rectangle.getBottomLeft(), "bottom-left");
     printVertex(rectangle.getTopRight(), "top-right");
 }
 #endif // RECTANGLE
 
+#if TRIANGLE || ISOSCELES_TRIANGLE
+void printInfo(const auto& triangle, std::string_view shapeName)
+{
+    std::println("The vertices of the {} are:", shapeName);
+    for (int i = 0; i < 3; ++i)
+    {
+        std::println("{}", triangle.getVertex(i));
+    }
+
+    std::println("The lengths of the sides of the {} are:", shapeName);
+    for (int i = 0; i < 3; ++i)
+    {
+        std::println("{}", triangle.getLength(i));
+    }
+}
+#endif // TRIANGLE || ISOSCELES_TRIANGLE
+
+#if TRIANGLE
+void printInfo(const Triangle& triangle)
+{
+    static constexpr auto shapeName = std::string_view("triangle");
+
+    printInfo(triangle, shapeName);
+}
+#endif // TRIANGLE
+
 #if ISOSCELES_TRIANGLE
 void printInfo(const IsoscelesTriangle& isoscelesTriangle)
 {
     static constexpr auto shapeName = std::string_view("isosceles triangle");
 
-    std::cout << "The height of the " << shapeName << " is: " << isoscelesTriangle.getHeight() << "\n";
+    printInfo(isoscelesTriangle, shapeName);
+
+    std::println("The height of the {} is: {}", shapeName, isoscelesTriangle.getHeight());
 }
 #endif // ISOSCELES_TRIANGLE
 
@@ -158,27 +177,28 @@ void printInfo(const Window& window)
     static constexpr auto shapeName = std::string_view("window");
 
     const auto printVertex = [](const Vertex& v, std::string_view vertexName)
-        {
-            std::cout << "The " << vertexName << " vertex of the " << shapeName << " is: " << to_string(v) << "\n";
-        };
+    {
+        std::println("The {} vertex of the {} is: {}", vertexName, shapeName, v);
+    };
 
     printVertex(window.getBottomLeft(), "bottom-left");
     printVertex(window.getTopRight(), "top-right");
 
-    std::cout << "The split point of the " << shapeName << " is: " << to_string(window.getPoint()) << "\n";
+    std::println("The split point of the {} is: {}", shapeName, window.getPoint());
 }
 #endif // WINDOW
 
 void waitForEnter()
 {
-    std::cout << "Press Enter to continue...\n";
+    std::println("Press Enter to continue...");
     auto line = std::string();
     std::getline(std::cin, line);
 }
 
 Vertex readVertex(std::string_view vertexName, std::string_view shapeName)
 {
-    std::cout << "Please enter x and y coordinates for the " << vertexName << " vertex of the " << shapeName << ":\n";
+    std::println("Please enter x and y coordinates for the {} vertex of the {}:",
+        vertexName, shapeName);
     auto v = Vertex();
     std::cin >> v;
     return v;
@@ -189,12 +209,12 @@ void useShape(Shape& shape, std::string_view shapeName)
 {
     auto board = Board();
     auto print = [&]
-        {
-            draw(shape, board);
-            printInfo(shape);
-            printGenericInfo(shape, shapeName);
-            waitForEnter();
-        };
+    {
+        draw(shape, board);
+        printInfo(shape);
+        printGenericInfo(shape, shapeName);
+        waitForEnter();
+    };
 
     print();
 
@@ -218,7 +238,7 @@ void draw(const Shape& shape, Board& board)
     board.print();
     waitForEnter();
 
-    std::cout << "Now with the bounding rectangle:\n";
+    std::println("Now with the bounding rectangle:");
     auto boundingRect = shape.getBoundingRectangle();
     boundingRect.draw(board);
     board.print();
@@ -228,7 +248,12 @@ void draw(const Shape& shape, Board& board)
 template<typename Shape>
 void printGenericInfo(const Shape& shape, std::string_view shapeName)
 {
-    std::cout << "The perimeter of the " << shapeName << " is: " << shape.getPerimeter() << "\n";
-    std::cout << "The area of the " << shapeName << " is: " << shape.getArea() << "\n";
-    std::cout << "The center of the " << shapeName << " is: " << to_string(shape.getCenter()) << "\n";
+    std::println("The perimeter of the {} is: {}",
+        shapeName, shape.getPerimeter());
+
+    std::println("The area of the {} is: {}",
+        shapeName, shape.getArea());
+
+    std::println("The center of the {} is: {}",
+        shapeName, shape.getCenter());
 }
