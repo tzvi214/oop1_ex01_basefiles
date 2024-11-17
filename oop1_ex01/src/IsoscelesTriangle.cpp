@@ -21,6 +21,11 @@ IsoscelesTriangle::IsoscelesTriangle(const Vertex vertices[3])
 		m_Triangle.getVertex(2));
 }
 
+IsoscelesTriangle::IsoscelesTriangle(const Vertex & left, const Vertex & right, double height)
+	:m_Triangle(Triangle(left, right, Vertex{ (left.m_col + right.m_col) / 2 ,left.m_row + height }))
+{
+}
+
 Vertex IsoscelesTriangle::getVertex(int index) const
 {
 	return m_Triangle.getVertex(index);
