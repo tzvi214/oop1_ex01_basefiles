@@ -5,26 +5,21 @@
 
 using namespace std;
 Window::Window(const Rectangle& rectangle, const Vertex& point) 
-	//:m_rectangle (rectangle), זה טוב אבל משתמש בבנאי העתקה 
 	:m_rectangle(Rectangle(m_rectangle.getBottomLeft(), m_rectangle.getTopRight())),
 	m_point(25, 15)
 {
 	if (point.isLegalWindo(rectangle.getBottomLeft(), rectangle.getTopRight()))
 	{
-		m_rectangle = rectangle; // האם מותר לעשות את זה כי זה בנאי העתקה
+		m_rectangle = rectangle; 
 		m_point = point;
 	}
-	cout << "in main counstrocrur Windo \n";
 }
 
 
 Window::Window(const Vertex& topRight, double width, double height, const Vertex& point)
   :Window(Rectangle (Vertex(topRight.m_col - width, topRight.m_row - height), topRight)
      , point)
-{
-
-	cout << "in counstrocrur Windo \n";
-}
+{}
 
 Vertex Window::getBottomLeft() const
 {
@@ -40,11 +35,9 @@ Vertex Window::getPoint() const
 {
 	return m_point;
 }
-//----------------------------------------
 Rectangle Window::getBoundingRectangle() const
 {
 	return m_rectangle.getBoundingRectangle();
-	// return m_rectangle;
 }
 
 double Window::getPerimeter() const
@@ -66,7 +59,7 @@ Vertex Window::getCenter() const
 
 bool Window::scale(double factor)
 {
-	return m_rectangle.scale(2); 
+	return m_rectangle.scale(factor); 
 }
 
 void Window::draw(Board& board) const
